@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { FileText, Linkedin, Instagram, Menu, X } from 'lucide-react';
+import { Briefcase, Linkedin, Instagram, Menu, X } from 'lucide-react';
 import { SOCIAL_LINKS, NAV_LINKS } from '../constants';
 
 interface HeaderProps {
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
 
   const getIcon = (label: string) => {
     switch (label) {
-      case 'CV': return <FileText size={20} />;
+      case 'Upwork': return <Briefcase size={20} />;
       case 'LinkedIn': return <Linkedin size={20} />;
       case 'Instagram': return <Instagram size={20} />;
       default: return null;
@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
       <header className="border-b border-white/10 relative z-20 bg-transparent w-full">
         <div className="relative flex items-center justify-between py-6 md:py-8 px-6 md:px-12 w-full max-w-screen-2xl 2xl:max-w-[1800px] mx-auto">
           {/* LEFT: Name / Logo */}
-          <div 
+          <div
             className="text-white font-medium text-lg 2xl:text-2xl tracking-wide cursor-pointer hover:opacity-80 transition-opacity z-30"
             onClick={() => handleNavClick('home')}
           >
@@ -57,9 +57,8 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
               <button
                 key={link.label}
                 onClick={() => handleNavClick(link.label)}
-                className={`text-sm 2xl:text-base tracking-wide transition-colors duration-300 hover:text-white ${
-                  currentPage === link.label.toLowerCase() ? 'text-white font-medium' : 'text-white/60'
-                }`}
+                className={`text-sm 2xl:text-base tracking-wide transition-colors duration-300 hover:text-white ${currentPage === link.label.toLowerCase() ? 'text-white font-medium' : 'text-white/60'
+                  }`}
               >
                 {link.label}
               </button>
@@ -71,10 +70,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             {/* Desktop Social Icons */}
             <div className="hidden md:flex items-center space-x-5 2xl:space-x-8 text-white">
               <div className="relative group">
-                <a href={getLink('CV')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="Resume">
-                  <FileText size={20} strokeWidth={1.5} className="2xl:w-6 2xl:h-6" />
+                <a href={getLink('Upwork')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="Upwork">
+                  <Briefcase size={20} strokeWidth={1.5} className="2xl:w-6 2xl:h-6" />
                 </a>
-                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/5 text-white text-[10px] uppercase tracking-wider rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap">Resume</span>
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/5 text-white text-[10px] uppercase tracking-wider rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap">Upwork</span>
               </div>
               <div className="relative group">
                 <a href={getLink('LinkedIn')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="LinkedIn">
@@ -91,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
+            <button
               className="md:hidden text-white p-1 focus:outline-none"
               onClick={() => setIsMenuOpen(true)}
               aria-label="Open menu"
@@ -103,27 +102,26 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
       </header>
 
       {/* MOBILE MENU OVERLAY */}
-      <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-2xl z-50 transition-all duration-500 ease-in-out md:hidden flex flex-col px-6 md:px-12 ${
-          isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
-        }`}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-2xl z-50 transition-all duration-500 ease-in-out md:hidden flex flex-col px-6 md:px-12 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
+          }`}
       >
         {/* Mobile Header Inside Overlay */}
         <div className="flex items-center justify-between py-6 md:py-8 border-b border-white/10 mb-8">
-           <div 
-             className="text-white font-medium text-lg tracking-wide cursor-pointer"
-             onClick={() => handleNavClick('home')}
-           >
-             Yuvraj Gupta
-           </div>
-           
-           <button 
-             className="text-white p-1 focus:outline-none"
-             onClick={() => setIsMenuOpen(false)}
-             aria-label="Close menu"
-           >
-             <X size={28} />
-           </button>
+          <div
+            className="text-white font-medium text-lg tracking-wide cursor-pointer"
+            onClick={() => handleNavClick('home')}
+          >
+            Yuvraj Gupta
+          </div>
+
+          <button
+            className="text-white p-1 focus:outline-none"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={28} />
+          </button>
         </div>
 
         {/* Mobile Nav Links */}
@@ -132,32 +130,31 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             <button
               key={link.label}
               onClick={() => handleNavClick(link.label)}
-              className={`text-3xl font-light tracking-tight transition-colors duration-300 ${
-                currentPage === link.label.toLowerCase() ? 'text-white' : 'text-white/40 hover:text-white'
-              }`}
+              className={`text-3xl font-light tracking-tight transition-colors duration-300 ${currentPage === link.label.toLowerCase() ? 'text-white' : 'text-white/40 hover:text-white'
+                }`}
             >
               {link.label}
             </button>
           ))}
-          
+
           <div className="w-12 h-px bg-white/10 my-8"></div>
         </div>
 
         {/* Mobile Social Links */}
         <div className="mb-10 space-y-4 px-2">
-           <h3 className="text-xs font-mono uppercase tracking-widest text-white/40 mb-4 text-center">Connect</h3>
-           {SOCIAL_LINKS.map((link) => (
-             <a 
-               key={link.label}
-               href={link.href}
-               target="_blank" 
-               rel="noopener noreferrer"
-               className="flex items-center justify-center space-x-4 text-white/70 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/5"
-             >
-               {getIcon(link.label)}
-               <span className="text-lg font-light">{link.label === 'CV' ? 'Resume' : link.label}</span>
-             </a>
-           ))}
+          <h3 className="text-xs font-mono uppercase tracking-widest text-white/40 mb-4 text-center">Connect</h3>
+          {SOCIAL_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center space-x-4 text-white/70 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/5"
+            >
+              {getIcon(link.label)}
+              <span className="text-lg font-light">{link.label === 'CV' ? 'Resume' : link.label}</span>
+            </a>
+          ))}
         </div>
       </div>
     </>

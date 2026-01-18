@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import Background from './components/Background';
 import Header from './components/Header';
-import MainContent from './components/MainContent';
-import About from './components/About';
-import Work from './components/Work';
+import MainContent from './pages/Home';
+import About from './pages/About';
+import Work from './pages/Work';
 import ClickSpark from './components/ClickSpark';
 import LightRays from './components/LightRays';
+import LoadingScreen from './components/LoadingScreen';
 
 const App: React.FC = () => {
   const [page, setPage] = useState<'home' | 'work' | 'about'>('home');
@@ -20,9 +20,11 @@ const App: React.FC = () => {
       duration={400}
     >
       <div className="min-h-screen w-full flex flex-col font-sans relative bg-gray-900 text-white selection:bg-white/20">
+        <LoadingScreen />
+
         {/* Background Layer - Dark Noisy Texture */}
         <Background />
-        
+
         {/* Global Light Rays - Consistent across pages */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           {/* Dark overlay to ensure text legibility and better ray contrast */}
@@ -43,7 +45,7 @@ const App: React.FC = () => {
 
         {/* Foreground Content */}
         <Header onNavigate={setPage} currentPage={page} />
-        
+
         {page === 'home' && <MainContent />}
         {page === 'work' && <Work />}
         {page === 'about' && <About />}
