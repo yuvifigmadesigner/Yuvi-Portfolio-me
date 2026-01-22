@@ -19,16 +19,6 @@ export const NAV_LINKS = [
 
 export const SIDE_PROJECTS = [
   {
-    id: 'google-attendance',
-    title: 'Google Attendance',
-    role: 'UX/UI Designer',
-    date: 'May - June',
-    description: 'A stress relief app for student in college attandance panic.',
-    image: 'https://previews.jumpshare.com/thumb/815bc01b796dd6f1733c957c5af19493fad58248bc71f8bc3ad68c09301761bcdac47bd7e539e3ba8a5cd9f89701e4eaefe32cfadce8a5327b0fbc1446a89e33d8c23f1f6732d0e69b7ef20dbd492539',
-    link: 'https://project-eta-lake-19.vercel.app/',
-    theme: 'lime'
-  },
-  {
     id: 'redesign-screen',
     title: 'Redesign Screen',
     role: 'UX/UI Designer',
@@ -37,6 +27,27 @@ export const SIDE_PROJECTS = [
     image: 'https://previews.jumpshare.com/thumb/815bc01b796dd6f1733c957c5af194937f22d5513d4bde2bd3475d6b1744c16e274a8daf0df62ec475bdf7495a33cb3c3af50c79dad595f9a7c7d079ea2aff3dda2a453cb1ee6965f8e03243a869cafd',
     link: 'https://bento.me/yuvraj-gupta-redesign',
     theme: 'beige'
+  },
+  {
+    id: 'b2b-fleet-management',
+    title: 'B2B Fleet Management',
+    role: 'Product Designer',
+    date: 'Jan 2026',
+    description: 'A comprehensive fleet management solution.',
+    image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2674&auto=format&fit=crop',
+    link: 'https://fleetmanagementb2b.vercel.app/',
+    theme: 'blue',
+    isIframe: true
+  },
+  {
+    id: 'google-attendance',
+    title: 'Google Attendance',
+    role: 'UX/UI Designer',
+    date: 'May 2025 - June 2025',
+    description: 'A stress relief app for student in college attandance panic.',
+    image: 'https://previews.jumpshare.com/thumb/815bc01b796dd6f1733c957c5af19493fad58248bc71f8bc3ad68c09301761bcdac47bd7e539e3ba8a5cd9f89701e4eaefe32cfadce8a5327b0fbc1446a89e33d8c23f1f6732d0e69b7ef20dbd492539',
+    link: 'https://project-eta-lake-19.vercel.app/',
+    theme: 'lime'
   },
   {
     id: 'user-management-workflow',

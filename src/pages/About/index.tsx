@@ -1,9 +1,12 @@
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowUpRight, Mail, Phone, Coffee, Camera, Mountain, MonitorOff, Heart } from 'lucide-react';
 import LightRays from '../../components/LightRays';
 import PhotoGallery from '../../components/PhotoGallery';
 import { PROFILE_IMAGE_URL } from '../../constants';
+import HobbyCard from '../../components/HobbyCard';
+import ContactCard from '../../components/ContactCard';
 
 const About: React.FC = () => {
     const [showGallery, setShowGallery] = useState(false);
@@ -44,46 +47,68 @@ const About: React.FC = () => {
                         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
 
                             {/* Profile Picture Section */}
-                            <div className="relative shrink-0 group mx-auto md:mx-0">
-                                {/* Animated Glow Backdrop */}
-                                <div className="absolute -inset-1 bg-gradient-to-tr from-orange-400/40 via-purple-500/40 to-blue-500/40 rounded-full blur-md opacity-70 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
-
-                                {/* Image Container */}
-                                <div className="relative w-32 h-32 md:w-40 md:h-40 2xl:w-48 2xl:h-48 rounded-full p-[2px] bg-gradient-to-tr from-white/20 to-white/5 shadow-2xl">
-                                    <div className="w-full h-full rounded-full overflow-hidden bg-black/50 border border-white/10 relative z-10">
+                            {/* Profile Picture - "The Engineer's Orbit" */}
+                            <motion.div
+                                className="relative shrink-0 group mx-auto md:mx-0 flex items-center justify-center py-4 md:py-8"
+                                initial="initial"
+                                whileHover="hover"
+                            >
+                                {/* Center Image Container */}
+                                <div className="relative w-32 h-32 md:w-40 md:h-40 2xl:w-48 2xl:h-48 z-20">
+                                    <div className="w-full h-full rounded-full overflow-hidden bg-black border-2 border-white/10 relative z-20 group-hover:border-[#D69452]/50 transition-colors duration-500">
                                         <img
                                             src={PROFILE_IMAGE_URL}
                                             alt="Profile"
                                             referrerPolicy="no-referrer"
-                                            className="w-full h-full object-cover object-center transform transition-transform duration-700 ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                                            className="w-full h-full object-cover object-center opacity-90 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110"
                                         />
                                     </div>
+
+                                    {/* Tech Orbit 1 (Dashed Ring) */}
+                                    <motion.div
+                                        className="absolute -inset-4 md:-inset-6 border border-dashed border-white/20 rounded-full z-10"
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                        variants={{
+                                            hover: { scale: 1.1, borderColor: "rgba(214, 148, 82, 0.4)" }
+                                        }}
+                                    />
+
+                                    {/* Tech Orbit 2 (Counter Arc) */}
+                                    <motion.div
+                                        className="absolute -inset-2 md:-inset-3 rounded-full z-10 border-t border-r border-transparent border-l-white/30 border-b-white/30"
+                                        animate={{ rotate: -360 }}
+                                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                        variants={{
+                                            hover: { scale: 1.05, borderLeftColor: "#D69452", borderBottomColor: "#D69452" }
+                                        }}
+                                        style={{ borderWidth: '2px' }}
+                                    />
+
+                                    {/* Status Satellite (Orbiting Dot) */}
+                                    <motion.div
+                                        className="absolute -inset-4 md:-inset-6 z-30"
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                                    >
+                                        <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#1a1512] border border-white/20 absolute -top-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center shadow-lg">
+                                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
+                                        </div>
+                                    </motion.div>
                                 </div>
 
-                                {/* Status Dot */}
-                                <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-5 h-5 bg-[#1a1512] rounded-full flex items-center justify-center z-20">
-                                    <span className="relative flex h-3 w-3">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                                    </span>
-                                </div>
-                            </div>
+                                {/* Background Glow */}
+                                <div className="absolute inset-0 bg-[#D69452]/5 rounded-full blur-[60px] scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                            </motion.div>
 
                             {/* Bio Text */}
                             <div className="space-y-6 2xl:space-y-8 text-lg md:text-xl 2xl:text-2xl text-white/70 leading-relaxed font-light">
                                 <h2 className="text-xs 2xl:text-sm font-mono uppercase tracking-widest text-white/50 mb-2">/ Who I Am</h2>
                                 <p>
-                                    Hi, I'm Yuvi. <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Certified Dreamer</span>. <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Sarcasm Enthusiast</span>. Recovering <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Engineer turned Designer</span>.
-                                    My philosophy? Simple. Effective. Beautiful. And it absolutely must pass the <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Vibe Check</span>.
+                                    I’m a designer with an <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">engineering foundation (B.Tech, NIT Goa)</span> who believes that the best <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">interfaces are the ones that disappear</span>. I specialize in the "hard stuff"—translating <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">complex SaaS requirements</span> into <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">elegant, ship-ready user experiences</span>.
                                 </p>
                                 <p>
-                                    I bridge the gap between logic and art. With a <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">B.Tech (NIT Goa)</span> foundation, I specialize in <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">UX/UI Design</span> for <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Complex SaaS</span>. I don't just design screens; I architect <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">User Experiences</span>.
-                                </p>
-                                <p>
-                                    My toolkit? <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Figma</span> for precision. <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">AI Builders</span> for speed. I deliver <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Ship-Ready Interfaces</span> that are technically feasible and deeply intuitive.
-                                </p>
-                                <p>
-                                    My superpower? <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Vibe Coding</span>. I speak both <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Design</span> and <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Code</span>, ensuring your vision survives development with <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Zero Friction</span>.
+                                    I work at the intersection of <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">Figma precision</span> and <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">AI-driven speed</span>. My unique advantage? I speak the <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">language of code</span> as fluently as the <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">language of design</span>. This means fewer <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">"lost in translation"</span> moments during handoff and a final product that is as <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">technically sound</span> as it is <span className="font-semibold text-white hover:text-[#D69452] transition-colors duration-300 cursor-cell border-b border-white/10 hover:border-[#D69452] border-dashed">visually compelling</span>.
                                 </p>
                             </div>
                         </div>
@@ -137,45 +162,27 @@ const About: React.FC = () => {
                 {/* PART 2: HOBBIES */}
                 <div className="mb-24 md:mb-32 2xl:mb-48">
                     <h2 className="text-xs 2xl:text-sm font-mono uppercase tracking-widest text-white/50 mb-8 2xl:mb-12">/ My Hobbies</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 2xl:gap-12">
-                        {/* Hobby 1 - Photography (Clickable) */}
-                        <div
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 2xl:gap-8">
+                        <HobbyCard
+                            index={0}
+                            title="Photography"
+                            description="Capturing textures, light, and candid moments. I love documenting the world through my lens."
+                            icon={Camera}
                             onClick={showGalleryHandler}
-                            className="p-6 2xl:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer group hover:scale-[1.02] hover:shadow-2xl"
-                        >
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-black transition-colors">
-                                <Camera size={24} strokeWidth={1.5} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <div className="flex justify-between items-center mb-2">
-                                <h3 className="text-xl 2xl:text-2xl font-medium">Photography</h3>
-                                <span className="text-xs 2xl:text-sm text-white/40 uppercase tracking-widest opacity-100 transition-opacity">View</span>
-                            </div>
-                            <p className="text-white/60 text-sm 2xl:text-lg leading-relaxed">
-                                Capturing textures, light, and candid moments. I love documenting the world through my lens.
-                            </p>
-                        </div>
-
-                        {/* Hobby 2 - Volunteering */}
-                        <div className="p-6 2xl:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6">
-                                <Heart size={24} strokeWidth={1.5} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <h3 className="text-xl 2xl:text-2xl font-medium mb-2">Volunteering</h3>
-                            <p className="text-white/60 text-sm 2xl:text-lg leading-relaxed">
-                                My way of giving back. Whether it's mentoring or local events, empowering others is the best feeling.
-                            </p>
-                        </div>
-
-                        {/* Hobby 3 */}
-                        <div className="p-6 2xl:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6">
-                                <Mountain size={24} strokeWidth={1.5} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <h3 className="text-xl 2xl:text-2xl font-medium mb-2">Traveling</h3>
-                            <p className="text-white/60 text-sm 2xl:text-lg leading-relaxed">
-                                Stepping away from the screen to find inspiration in nature and new cultures.
-                            </p>
-                        </div>
+                            actionLabel="View"
+                        />
+                        <HobbyCard
+                            index={1}
+                            title="Volunteering"
+                            description="My way of giving back. Whether it's mentoring or local events, empowering others is the best feeling."
+                            icon={Heart}
+                        />
+                        <HobbyCard
+                            index={2}
+                            title="Traveling"
+                            description="Stepping away from the screen to find inspiration in nature and new cultures."
+                            icon={Mountain}
+                        />
                     </div>
                 </div>
 
@@ -183,52 +190,30 @@ const About: React.FC = () => {
                 <div>
                     <h2 className="text-xs 2xl:text-sm font-mono uppercase tracking-widest text-white/50 mb-8 2xl:mb-12">/ Get in Touch</h2>
                     <div className="grid gap-4 2xl:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {/* Email Card */}
-                        <a
+                        <ContactCard
+                            index={0}
+                            label="Email"
+                            value="yuvrajkumar0221@gmail.com"
                             href="mailto:yuvrajkumar0221@gmail.com"
-                            className="group flex items-center gap-4 p-5 2xl:p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                        >
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors shrink-0">
-                                <Mail size={20} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <div className="overflow-hidden">
-                                <div className="text-xs 2xl:text-sm text-white/50 uppercase tracking-wider font-medium mb-0.5">Email</div>
-                                <div className="text-sm 2xl:text-lg text-white/90 font-medium truncate">yuvrajkumar0221@gmail.com</div>
-                            </div>
-                        </a>
-
-                        {/* Phone Card */}
-                        <a
+                            icon={Mail}
+                            color="#EDEDED"
+                        />
+                        <ContactCard
+                            index={1}
+                            label="Phone"
+                            value="+91 76988 93369"
                             href="tel:+917698893369"
-                            className="group flex items-center gap-4 p-5 2xl:p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                        >
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors shrink-0">
-                                <Phone size={20} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <div>
-                                <div className="text-xs 2xl:text-sm text-white/50 uppercase tracking-wider font-medium mb-0.5">Phone</div>
-                                <div className="text-sm 2xl:text-lg text-white/90 font-medium">+91 76988 93369</div>
-                            </div>
-                        </a>
-
-                        {/* Buy Me a Coffee Card */}
-                        <a
+                            icon={Phone}
+                            color="#D69452"
+                        />
+                        <ContactCard
+                            index={2}
+                            label="Support"
+                            value="Buy Me a Coffee"
                             href="https://buymeacoffee.com/yuvraj.gupta"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-4 p-5 2xl:p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-[#FFDD00]/10 hover:border-[#FFDD00]/30 transition-all duration-300 sm:col-span-2 lg:col-span-1"
-                        >
-                            <div className="w-12 h-12 2xl:w-16 2xl:h-16 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-[#FFDD00] group-hover:text-black transition-colors shrink-0">
-                                <Coffee size={20} className="2xl:w-8 2xl:h-8" />
-                            </div>
-                            <div className="flex-1 flex justify-between items-center">
-                                <div className="overflow-hidden mr-2">
-                                    <div className="text-xs 2xl:text-sm text-white/50 uppercase tracking-wider font-medium mb-0.5 group-hover:text-[#FFDD00] transition-colors">Support</div>
-                                    <div className="text-sm 2xl:text-lg text-white/90 font-medium truncate">Buy Me a Coffee</div>
-                                </div>
-                                <ArrowUpRight size={18} className="text-white/30 group-hover:text-[#FFDD00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 2xl:w-6 2xl:h-6" />
-                            </div>
-                        </a>
+                            icon={Coffee}
+                            color="#FFDD00"
+                        />
                     </div>
                 </div>
             </main>

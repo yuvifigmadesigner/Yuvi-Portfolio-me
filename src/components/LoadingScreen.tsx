@@ -72,25 +72,23 @@ const LoadingScreen: React.FC<{ onComplete?: () => void }> = ({ onComplete }) =>
                     <div className="absolute inset-0 bg-noise opacity-[0.45] mix-blend-overlay pointer-events-none z-[1]"></div>
 
                     {/* Content Container */}
-                    <div className="relative z-10 flex flex-col items-center p-8 w-full max-w-md">
+                    <div className="relative z-10 flex flex-col items-center p-8 w-full max-w-lg">
 
-                        {/* Main Title with Typer/Transition Effect */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="mb-12 relative"
-                        >
-                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter relative z-10 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
-                                Yuvi.
-                            </h1>
-                            {/* Beam of light passing through text */}
-                            <motion.div
-                                className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent blur-xl"
-                                animate={{ x: ['-100%', '100%'] }}
-                                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-                            />
-                        </motion.div>
+                        {/* Main Title Replaced by Rotator */}
+                        <div className="h-24 flex items-center justify-center w-full mb-8">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={wordIndex}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.5, ease: "easeOut" }}
+                                    className="text-3xl md:text-5xl font-medium tracking-tight text-white text-center"
+                                >
+                                    {KIND_WORDS[wordIndex]}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
 
                         {/* Progress Bar Container */}
                         <div className="w-full relative py-4">
@@ -109,22 +107,6 @@ const LoadingScreen: React.FC<{ onComplete?: () => void }> = ({ onComplete }) =>
                                     transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
                                 />
                             </div>
-                        </div>
-
-                        {/* Kind Words Transition */}
-                        <div className="h-8 flex items-center justify-center w-full mt-2">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={wordIndex}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="text-sm md:text-base font-mono uppercase tracking-widest text-[#D69452]/80"
-                                >
-                                    {KIND_WORDS[wordIndex]}
-                                </motion.div>
-                            </AnimatePresence>
                         </div>
                     </div>
                 </motion.div>

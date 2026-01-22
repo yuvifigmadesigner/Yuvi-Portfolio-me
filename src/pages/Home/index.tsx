@@ -4,7 +4,8 @@ import { Smile, Layers, Sparkles, Code, ChevronDown, ArrowUpRight } from 'lucide
 import { useISTTime } from '../../hooks/useSeattleTime';
 import LightRays from '../../components/LightRays';
 import ServiceModal from '../../components/ServiceModal';
-import SplitText from '../../components/SplitText';
+import ScrambledText from '../../components/ScrambledText';
+import ServiceCard from '../../components/ServiceCard';
 
 const MainContent: React.FC = () => {
   const istTime = useISTTime();
@@ -36,7 +37,7 @@ const MainContent: React.FC = () => {
 
       <div className="flex-1 w-full max-w-screen-2xl 2xl:max-w-[1800px] mx-auto z-10 relative">
         {/* HERO SECTION */}
-        <main className="flex flex-col justify-center px-6 md:px-12 min-h-[85vh] text-white relative pb-32 md:pb-40 pt-32 md:pt-48">
+        <main className="flex flex-col justify-center px-6 md:px-12 min-h-[85vh] text-white relative pb-32 md:pb-40 pt-24 md:pt-32">
 
           {/* Location & Time */}
           <div className="flex items-center space-x-3 text-sm md:text-base 2xl:text-xl font-mono opacity-80 mb-8 md:mb-12">
@@ -46,12 +47,28 @@ const MainContent: React.FC = () => {
           </div>
 
           {/* Divider */}
-          <div className="w-full h-px bg-gradient-to-r from-white/40 to-transparent mb-16 md:mb-24"></div>
+          <div className="w-full h-px bg-gradient-to-r from-white/40 to-transparent mb-8 md:mb-12"></div>
 
           {/* Hero Headline */}
-          <h1 className="text-6xl md:text-8xl lg:text-[7rem] 2xl:text-[10rem] font-medium tracking-tighter leading-none mb-24 md:mb-32 2xl:mb-40 drop-shadow-lg">
-            Hi, this is <SplitText text="Yuvi." className="inline-block" delay={200} />
+          <h1 className="text-6xl md:text-8xl lg:text-[7rem] 2xl:text-[10rem] font-medium tracking-tighter leading-none mb-2 drop-shadow-lg">
+            <ScrambledText
+              radius={100}
+              duration={0.6}
+              scrambleChars=".:"
+            >
+              Hi, This is Yuvraj
+            </ScrambledText>
           </h1>
+
+          <p className="text-lg md:text-2xl text-white/50 uppercase tracking-wide mb-24 md:mb-32 2xl:mb-40 pl-1">
+            <ScrambledText
+              radius={100}
+              duration={0.6}
+              scrambleChars=".:"
+            >
+              Product Designer | UX/UI Designer
+            </ScrambledText>
+          </p>
 
           {/* Footer Info */}
           <div className="flex flex-col space-y-3 w-full text-lg md:text-xl 2xl:text-2xl tracking-wide">
@@ -94,63 +111,28 @@ const MainContent: React.FC = () => {
             <span className="ml-4 text-2xl 2xl:text-3xl">↓</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 2xl:gap-12">
-            {/* Service 1 */}
-            <div
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 2xl:gap-8">
+            <ServiceCard
+              index={0}
+              title="UX/UI Design SaaS"
+              description="Designing seamless experiences to engage users and drive results."
+              icon={Layers}
               onClick={() => handleServiceClick('UX/UI Design SaaS')}
-              className="relative flex flex-col p-8 2xl:p-12 rounded-[2.5rem] bg-[#1a1512]/40 border border-white/10 backdrop-blur-md hover:bg-[#2a2420]/60 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
-            >
-              {/* Visual Indicator (Top Right) */}
-              <div className="absolute top-8 right-8 2xl:top-12 2xl:right-12 w-10 h-10 2xl:w-14 2xl:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/30 group-hover:text-black group-hover:bg-white transition-all duration-300">
-                <ArrowUpRight size={20} className="2xl:w-8 2xl:h-8" />
-              </div>
-
-              <div className="w-14 h-14 2xl:w-20 2xl:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 group-hover:bg-white group-hover:text-black transition-colors duration-300">
-                <Layers size={28} strokeWidth={1.5} className="2xl:w-10 2xl:h-10" />
-              </div>
-              <h3 className="text-2xl 2xl:text-4xl font-bold mb-4 tracking-tight">UX/UI Design Saas</h3>
-              <p className="text-white/60 leading-relaxed text-lg 2xl:text-2xl font-light flex-1">
-                Designing seamless experiences to engage users and drive results.
-              </p>
-            </div>
-
-            {/* Service 2 */}
-            <div
+            />
+            <ServiceCard
+              index={1}
+              title="Re-Design SaaS"
+              description="Creating stunning, user-centric redesigning that represent your brand."
+              icon={Sparkles}
               onClick={() => handleServiceClick('Re-Design SaaS')}
-              className="relative flex flex-col p-8 2xl:p-12 rounded-[2.5rem] bg-[#1a1512]/40 border border-white/10 backdrop-blur-md hover:bg-[#2a2420]/60 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
-            >
-              {/* Visual Indicator (Top Right) */}
-              <div className="absolute top-8 right-8 2xl:top-12 2xl:right-12 w-10 h-10 2xl:w-14 2xl:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/30 group-hover:text-black group-hover:bg-white transition-all duration-300">
-                <ArrowUpRight size={20} className="2xl:w-8 2xl:h-8" />
-              </div>
-
-              <div className="w-14 h-14 2xl:w-20 2xl:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 group-hover:bg-white group-hover:text-black transition-colors duration-300">
-                <Sparkles size={28} strokeWidth={1.5} className="2xl:w-10 2xl:h-10" />
-              </div>
-              <h3 className="text-2xl 2xl:text-4xl font-bold mb-4 tracking-tight">Re-Design Saas</h3>
-              <p className="text-white/60 leading-relaxed text-lg 2xl:text-2xl font-light flex-1">
-                Creating stunning, user-centric redesigning that represent your brand.
-              </p>
-            </div>
-
-            {/* Service 3 - Vibe Coding */}
-            <div
+            />
+            <ServiceCard
+              index={2}
+              title="Vibe Coding"
+              description="Translating creative vision into pixel-perfect reality with zero friction."
+              icon={Code}
               onClick={() => handleServiceClick('Vibe Coding')}
-              className="relative flex flex-col p-8 2xl:p-12 rounded-[2.5rem] bg-[#1a1512]/40 border border-white/10 backdrop-blur-md hover:bg-[#2a2420]/60 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
-            >
-              {/* Visual Indicator (Top Right) */}
-              <div className="absolute top-8 right-8 2xl:top-12 2xl:right-12 w-10 h-10 2xl:w-14 2xl:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/30 group-hover:text-black group-hover:bg-white transition-all duration-300">
-                <ArrowUpRight size={20} className="2xl:w-8 2xl:h-8" />
-              </div>
-
-              <div className="w-14 h-14 2xl:w-20 2xl:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 group-hover:bg-white group-hover:text-black transition-colors duration-300">
-                <Code size={28} strokeWidth={1.5} className="2xl:w-10 2xl:h-10" />
-              </div>
-              <h3 className="text-2xl 2xl:text-4xl font-bold mb-4 tracking-tight">Vibe Coding</h3>
-              <p className="text-white/60 leading-relaxed text-lg 2xl:text-2xl font-light flex-1">
-                Translating creative vision into pixel-perfect reality with zero friction.
-              </p>
-            </div>
+            />
           </div>
         </section>
       </div>

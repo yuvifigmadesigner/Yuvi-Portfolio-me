@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Briefcase, Linkedin, Instagram, Menu, X } from 'lucide-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SOCIAL_LINKS, NAV_LINKS } from '../constants';
 
 interface HeaderProps {
@@ -10,6 +12,16 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect for glassmorphism
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Prevent scrolling when menu is open
   useEffect(() => {
@@ -30,133 +42,170 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
 
   const getLink = (label: string) => SOCIAL_LINKS.find(l => l.label === label)?.href || '#';
 
-  const getIcon = (label: string) => {
-    switch (label) {
-      case 'Upwork': return <Briefcase size={20} />;
-      case 'LinkedIn': return <Linkedin size={20} />;
-      case 'Instagram': return <Instagram size={20} />;
-      default: return null;
-    }
-  };
-
   return (
     <>
-      <header className="border-b border-white/10 relative z-20 bg-transparent w-full">
-        <div className="relative flex items-center justify-between py-6 md:py-8 px-6 md:px-12 w-full max-w-screen-2xl 2xl:max-w-[1800px] mx-auto">
-          {/* LEFT: Name / Logo */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-black/20 backdrop-blur-sm' : 'py-6 md:py-8 bg-transparent'
+          }`}
+      >
+        <div className="flex items-center justify-between px-6 md:px-12 w-full max-w-screen-2xl 2xl:max-w-[1800px] mx-auto">
+
+          {/* LEFT: Logo Animation */}
           <div
-            className="text-white font-medium text-lg 2xl:text-2xl tracking-wide cursor-pointer hover:opacity-80 transition-opacity z-30"
+            className="cursor-pointer hover:opacity-80 transition-opacity z-50 relative"
             onClick={() => handleNavClick('home')}
           >
-            Yuvraj Gupta
+            <div className={`transition-all duration-300 ${scrolled ? 'scale-90 origin-left' : 'scale-100'} w-[180px] h-[60px] -ml-4 flex items-center`}>
+              <DotLottieReact
+                src="https://lottie.host/6f33a9cb-c6c4-4a3d-9363-3cff17fa93ca/uiviswzgrj.lottie"
+                loop
+                autoplay
+              />
+            </div>
           </div>
 
-          {/* CENTER: Desktop Nav (Absolutely Positioned) */}
-          <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center space-x-8 2xl:space-x-12 z-20">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => handleNavClick(link.label)}
-                className={`text-sm 2xl:text-base tracking-wide transition-colors duration-300 hover:text-white ${currentPage === link.label.toLowerCase() ? 'text-white font-medium' : 'text-white/60'
-                  }`}
-              >
-                {link.label}
-              </button>
-            ))}
-          </nav>
+          {/* CENTER: Floating Island Nav (Desktop) */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 hidden md:block">
+            <nav className="flex items-center p-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg ring-1 ring-white/5">
+              {NAV_LINKS.map((link) => {
+                const isActive = currentPage === link.label.toLowerCase();
+                return (
+                  <button
+                    key={link.label}
+                    onClick={() => handleNavClick(link.label)}
+                    className={`relative px-6 py-2.5 text-sm font-medium transition-colors duration-300 rounded-full ${isActive ? 'text-black' : 'text-white/70 hover:text-white'
+                      }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="nav-pill"
+                        className="absolute inset-0 bg-white rounded-full"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    <span className="relative z-10 font-sans tracking-wide">{link.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
 
-          {/* RIGHT: Social Icons (Desktop) & Mobile Toggle */}
-          <div className="flex items-center gap-6 z-30">
-            {/* Desktop Social Icons */}
-            <div className="hidden md:flex items-center space-x-5 2xl:space-x-8 text-white">
-              <div className="relative group">
-                <a href={getLink('Upwork')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="Upwork">
-                  <Briefcase size={20} strokeWidth={1.5} className="2xl:w-6 2xl:h-6" />
+          {/* RIGHT: Social Icons & Menu */}
+          <div className="flex items-center gap-4 z-50">
+            {/* Desktop Social Icons - Circular Buttons */}
+            <div className="hidden md:flex items-center gap-3">
+              {[
+                { label: 'Upwork', icon: Briefcase },
+                { label: 'LinkedIn', icon: Linkedin },
+                { label: 'Instagram', icon: Instagram }
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={getLink(social.label)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 transition-all duration-300 hover:scale-110 hover:bg-white hover:text-black hover:border-transparent"
+                  aria-label={social.label}
+                >
+                  <social.icon size={18} strokeWidth={1.5} />
+
+                  {/* Tooltip */}
+                  <span className="absolute top-full mt-3 px-2 py-1 bg-white/10 backdrop-blur-md border border-white/10 text-white text-[10px] uppercase tracking-wider rounded opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none whitespace-nowrap">
+                    {social.label}
+                  </span>
                 </a>
-                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/5 text-white text-[10px] uppercase tracking-wider rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap">Upwork</span>
-              </div>
-              <div className="relative group">
-                <a href={getLink('LinkedIn')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="LinkedIn">
-                  <Linkedin size={20} strokeWidth={1.5} className="2xl:w-6 2xl:h-6" />
-                </a>
-                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/5 text-white text-[10px] uppercase tracking-wider rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap">LinkedIn</span>
-              </div>
-              <div className="relative group">
-                <a href={getLink('Instagram')} target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity block" aria-label="Instagram">
-                  <Instagram size={20} strokeWidth={1.5} className="2xl:w-6 2xl:h-6" />
-                </a>
-                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/5 text-white text-[10px] uppercase tracking-wider rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap">Instagram</span>
-              </div>
+              ))}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Glassy Square */}
             <button
-              className="md:hidden text-white p-1 focus:outline-none"
+              className="md:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all"
               onClick={() => setIsMenuOpen(true)}
               aria-label="Open menu"
             >
-              <Menu size={28} />
+              <Menu size={20} />
             </button>
           </div>
         </div>
       </header>
 
       {/* MOBILE MENU OVERLAY */}
-      <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-2xl z-50 transition-all duration-500 ease-in-out md:hidden flex flex-col px-6 md:px-12 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
-          }`}
-      >
-        {/* Mobile Header Inside Overlay */}
-        <div className="flex items-center justify-between py-6 md:py-8 border-b border-white/10 mb-8">
-          <div
-            className="text-white font-medium text-lg tracking-wide cursor-pointer"
-            onClick={() => handleNavClick('home')}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 bg-[#0f0a06] z-[60] flex flex-col p-6 md:p-12"
           >
-            Yuvraj Gupta
-          </div>
+            {/* Mobile Header */}
+            <div className="flex items-center justify-between mb-12">
+              <div
+                className="cursor-pointer"
+                onClick={() => handleNavClick('home')}
+              >
+                <div className="w-[160px] h-[50px] -ml-4 flex items-center">
+                  <DotLottieReact
+                    src="https://lottie.host/6f33a9cb-c6c4-4a3d-9363-3cff17fa93ca/uiviswzgrj.lottie"
+                    loop
+                    autoplay
+                  />
+                </div>
+              </div>
 
-          <button
-            className="text-white p-1 focus:outline-none"
-            onClick={() => setIsMenuOpen(false)}
-            aria-label="Close menu"
-          >
-            <X size={28} />
-          </button>
-        </div>
+              <button
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-        {/* Mobile Nav Links */}
-        <div className="flex flex-col items-center justify-center space-y-8 flex-1">
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.label}
-              onClick={() => handleNavClick(link.label)}
-              className={`text-3xl font-light tracking-tight transition-colors duration-300 ${currentPage === link.label.toLowerCase() ? 'text-white' : 'text-white/40 hover:text-white'
-                }`}
+            {/* Mobile Nav Links */}
+            <div className="flex flex-col items-center justify-center flex-1 space-y-6">
+              {NAV_LINKS.map((link, i) => (
+                <motion.button
+                  key={link.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.1 }}
+                  onClick={() => handleNavClick(link.label)}
+                  className={`text-4xl md:text-5xl font-light tracking-tight transition-colors duration-300 ${currentPage === link.label.toLowerCase() ? 'text-white' : 'text-white/40 active:text-white'
+                    }`}
+                >
+                  {link.label}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Mobile Socials */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex justify-center gap-6 mt-12 mb-8"
             >
-              {link.label}
-            </button>
-          ))}
-
-          <div className="w-12 h-px bg-white/10 my-8"></div>
-        </div>
-
-        {/* Mobile Social Links */}
-        <div className="mb-10 space-y-4 px-2">
-          <h3 className="text-xs font-mono uppercase tracking-widest text-white/40 mb-4 text-center">Connect</h3>
-          {SOCIAL_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center space-x-4 text-white/70 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/5"
-            >
-              {getIcon(link.label)}
-              <span className="text-lg font-light">{link.label === 'CV' ? 'Resume' : link.label}</span>
-            </a>
-          ))}
-        </div>
-      </div>
+              {[
+                { label: 'Upwork', icon: Briefcase },
+                { label: 'LinkedIn', icon: Linkedin },
+                { label: 'Instagram', icon: Instagram }
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={getLink(social.label)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 active:scale-95 active:bg-white active:text-black transition-all"
+                >
+                  <social.icon size={20} />
+                </a>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

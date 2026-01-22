@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Background from './components/Background';
 import Header from './components/Header';
 import MainContent from './pages/Home';
@@ -7,9 +8,38 @@ import Work from './pages/Work';
 import ClickSpark from './components/ClickSpark';
 import LightRays from './components/LightRays';
 import LoadingScreen from './components/LoadingScreen';
+import GridLines from './components/GridLines';
+import { Reveal } from './components/Reveal';
 
 const App: React.FC = () => {
-  const [page, setPage] = useState<'home' | 'work' | 'about'>('home');
+  const [activeSection, setActiveSection] = useState<'home' | 'work' | 'about'>('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'work', 'about'];
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section as any);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (section: 'home' | 'work' | 'about') => {
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <ClickSpark
@@ -43,12 +73,32 @@ const App: React.FC = () => {
           />
         </div>
 
-        {/* Foreground Content */}
-        <Header onNavigate={setPage} currentPage={page} />
+        {/* Grid Lines Overlay */}
+        <GridLines />
 
-        {page === 'home' && <MainContent />}
-        {page === 'work' && <Work />}
-        {page === 'about' && <About />}
+        {/* Foreground Content */}
+        <Header onNavigate={scrollToSection} currentPage={activeSection} />
+
+        <main className="relative z-10 flex flex-col">
+          <section id="home" className="min-h-screen">
+            <MainContent />
+          </section>
+
+          <section id="work" className="min-h-screen">
+            <Reveal width="100%">
+              <Work />
+            </Reveal>
+          </section>
+
+          <section id="about" className="min-h-screen">
+            <Reveal width="100%">
+              <About />
+            </Reveal>
+          </section>
+        </main>
+
+        {/* Global Paper Texture Overlay - Affects Text and Content */}
+        <div className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.2] mix-blend-overlay bg-noise"></div>
       </div>
     </ClickSpark>
   );
