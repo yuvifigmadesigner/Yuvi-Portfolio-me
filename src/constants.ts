@@ -24,9 +24,10 @@ export const SIDE_PROJECTS = [
     role: 'UX/UI Designer',
     date: 'Jan 2025 - Present',
     description: 'A UXhack challenge.',
-    image: 'https://previews.jumpshare.com/thumb/815bc01b796dd6f1733c957c5af194937f22d5513d4bde2bd3475d6b1744c16e274a8daf0df62ec475bdf7495a33cb3c3af50c79dad595f9a7c7d079ea2aff3dda2a453cb1ee6965f8e03243a869cafd',
-    link: 'https://bento.me/yuvraj-gupta-redesign',
-    theme: 'beige'
+    image: 'https://s0.wp.com/mshots/v1/https%3A%2F%2Fredesigngallery.vercel.app%2F?w=1200&h=630',
+    link: 'https://redesigngallery.vercel.app/',
+    theme: 'beige',
+    isIframe: true
   },
   {
     id: 'b2b-fleet-management',
@@ -41,7 +42,7 @@ export const SIDE_PROJECTS = [
   },
   {
     id: 'google-attendance',
-    title: 'Attendance Tracker',
+    title: 'Google Attendance',
     role: 'UX/UI Designer',
     date: 'May 2025 - June 2025',
     description: 'A stress relief app for student in college attandance panic.',
